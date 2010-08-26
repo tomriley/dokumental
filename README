@@ -1,0 +1,11 @@
+Dokumental
+==========
+
+Rails plugin to add a simple markdown based hierarchy of editable, database backed pages, e.g. a website manual. Can also serve static (checked in) pages.
+
+Example
+=======
+
+to come...
+
+Copyright (c) 2010 Tom Riley, released under the MIT license

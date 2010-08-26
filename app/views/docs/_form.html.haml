@@ -1,0 +1,13 @@
+= f.error_messages
+.field
+  = f.label :title
+  = f.text_field :title, :size => 100
+.field
+  = f.label :permalink
+  = f.text_field :permalink, :size => 60, :title => 'optional'
+.field
+  = f.label :content
+  = f.text_area :content, :cols => 85, :rows => 30
+.field
+  = f.label :parent_id
+  = f.select :parent_id, [["None (Root Doc)", '']]+nested_set_options(Doc, @doc) {|i| "#{'-' * i.level} #{i.title}" }

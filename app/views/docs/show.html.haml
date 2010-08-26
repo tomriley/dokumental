@@ -1,0 +1,16 @@
+- set_doc_page_title @doc.title
+= render :partial => 'sidebar'
+#doc_main_content
+  - if !@doc.static? && current_user_can_edit_doc?(@doc)
+    %p.admin-actions
+      = link_to "Edit this page", :action => 'edit'
+      |
+      = link_to "New subpage...", new_doc_path(:parent_id => @doc.id), :class => 'new-doc'
+      |
+      = link_to "Delete this page#{' and all subpages' if @doc.children}", @doc, :method => :delete, :confirm => 'Are you sure you want to delete this page?', :style => 'color:red'
+  %h1.doc-title=h @doc.title
+  = markdown @doc.content
+  - if @doc.children
+    #sub_doc_links
+      = render_li_hierarchy(@doc, true)
+    

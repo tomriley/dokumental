@@ -1,0 +1,6 @@
+- set_doc_page_title "Edit #{h @doc.title}"
+= render :partial => 'sidebar'
+#doc_main_content
+  - form_for @doc do |f|
+    = render :partial => 'form', :locals => {:f => f}
+    = f.submit "Save Changes"

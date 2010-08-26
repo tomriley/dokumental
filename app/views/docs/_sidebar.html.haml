@@ -1,0 +1,10 @@
+#doc_sidebar
+  - if current_user_can_create_doc?
+    %p.admin-actions
+      = link_to "New page...", new_doc_path, :class => 'new-doc'
+  %ol
+    - Doc.roots.each do |root|
+      = render_li_hierarchy(root)
+  %ol#static_docs
+    - Doc.static_docs.values.each do |doc|
+      %li= link_to h(doc.title), doc_path(doc.permalink), :class => ('current' if @doc == doc)
