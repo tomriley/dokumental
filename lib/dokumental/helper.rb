@@ -32,5 +32,9 @@ module Helper
     raise "please implement the helper method 'current_user_can_create_doc?'"
   end
   
+  def current_user_can_view_doc?(doc)
+    raise "please implement the helper method 'current_user_can_view_doc?'"
+  end
+  
 end
 end

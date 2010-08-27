@@ -1,9 +1,11 @@
 class DocsController < ApplicationController
+  before_filter :authenticate_view_doc_action, :only => %w(index show)
   before_filter :authenticate_edit_doc_action, :only => %w(edit update destroy)
   before_filter :authenticate_new_doc_action, :only => %w(index create new)
   respond_to :html
   helper_method :current_user_can_edit_doc?
   helper_method :current_user_can_create_doc?
+  helper_method :current_user_can_view_doc?
   
   def index
   end
@@ -26,7 +28,7 @@ class DocsController < ApplicationController
   end
   
   def create
-    clear_permalink = nil_or_blank?(params[:doc][:permalink])
+    clear_permalink = params[:doc][:permalink].nil? || params[:doc][:permalink].blank?
     @doc = Doc.new(params[:doc])
     if !@doc.save && clear_permalink
       # Clear generated permalink
@@ -50,6 +52,10 @@ protected
   
   def authenticate_edit_doc_action
     raise ActiveRecord::RecordNotFound if !current_user_can_edit_doc?(Doc.find_by_permalink(params[:id]))
+  end
+  
+  def authenticate_view_doc_action
+    raise ActiveRecord::RecordNotFound if !current_user_can_view_doc?(params[:id] ? Doc.find_by_permalink(params[:id]) : nil)
   end
   
 end
