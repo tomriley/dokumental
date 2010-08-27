@@ -3,9 +3,6 @@ class DocsController < ApplicationController
   before_filter :authenticate_edit_doc_action, :only => %w(edit update destroy)
   before_filter :authenticate_new_doc_action, :only => %w(index create new)
   respond_to :html
-  helper_method :current_user_can_edit_doc?
-  helper_method :current_user_can_create_doc?
-  helper_method :current_user_can_view_doc?
   
   def index
   end
