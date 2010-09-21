@@ -9,7 +9,7 @@
       |
       = link_to "Delete this page#{' and all subpages' if @doc.children}", @doc, :method => :delete, :confirm => 'Are you sure you want to delete this page?', :style => 'color:red'
   %h1.doc-title=h @doc.title
-  = markdown @doc.content
+  = render_doc_content @doc
   - if @doc.children
     #sub_doc_links
       = render_li_hierarchy(@doc, true)

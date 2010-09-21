@@ -12,7 +12,7 @@ module Helper
       html << "</ol>\n"
     end
     html << "\n</li>" unless skip_root
-    html
+    dok_html_safe(html)
   end
   
   def link_to_doc(label, permalink, link_opts = {})
@@ -22,6 +22,16 @@ module Helper
     else
       link_to label, "/docs/#{permalink}", link_opts
     end
+  end
+  
+  def render_doc_content(doc)
+    html = BlueCloth.new(doc.content).to_html
+    dok_html_safe(html)
+  end
+  
+  # Call html_safe on string if present
+  def dok_html_safe(html)
+    html.respond_to?(:html_safe) ? html.html_safe : html
   end
   
   def current_user_can_edit_doc?(doc)
