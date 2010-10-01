@@ -46,5 +46,9 @@ module Helper
     raise "please implement the helper method 'current_user_can_view_doc?'"
   end
   
+  def doc_author_id_to_display_name(author_id)
+    raise "please implement the helper method 'doc_author_id_to_display_name'"
+  end
+  
 end
 end

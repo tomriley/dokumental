@@ -1,10 +1,12 @@
 class Doc < ActiveRecord::Base
-  attr_accessible :title, :permalink, :content, :parent_id
+  attr_accessible :title, :permalink, :content, :parent_id, :author_id
   acts_as_nested_set
   validates_presence_of :title
   validates_uniqueness_of :title
   has_permalink :title
   attr_accessor :static
+  acts_as_versioned
+  self.non_versioned_columns += %w(parent_id lft rgt)
   
   def static?
     static

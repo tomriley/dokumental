@@ -10,6 +10,7 @@ Requirements
 * bluecloth
 * haml
 * awesome\_nested\_set
+* acts\_as\_versioned
 
 Required Migration
 ------------------
@@ -18,22 +19,44 @@ Required Migration
       def self.up
         create_table :docs do |t|
           t.string :title
+          t.integer :version
           t.string :permalink
           t.text :content
           t.integer :parent_id
           t.integer :lft
           t.integer :rgt
+          t.integer :author_id
           t.timestamps
         end
         add_index :docs, :permalink
+        add_index :docs, :version
         add_index :docs, :updated_at
         add_index :docs, :created_at
         add_index :docs, :lft
         add_index :docs, :rgt
         add_index :docs, :parent_id
+        add_index :docs, :author_id
+
+        create_table :doc_versions do |t|
+          t.references :doc
+          t.integer :author_id
+          t.integer :version
+          t.string :title
+          t.string :permalink
+          t.text :content
+          t.timestamps
+        end
+        add_index :doc_versions, :doc_id
+        add_index :doc_versions, :version
+        add_index :doc_versions, :permalink
+        add_index :doc_versions, :updated_at
+        add_index :doc_versions, :created_at
+        add_index :doc_versions, :doc_id
+        add_index :doc_versions, :author_id
       end
 
       def self.down
+        drop_table :doc_versions
         drop_table :docs
       end
     end

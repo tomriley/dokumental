@@ -1,3 +1,5 @@
+require 'dokumental/diff'
+
 if defined?(ActionView)
   require 'dokumental/helper'
   ActionView::Base.class_eval do

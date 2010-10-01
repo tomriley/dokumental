@@ -3,8 +3,11 @@
     - if Doc.home_exists?
       = link_to "Home", doc_path('home')
       |
-    = link_to "Edit this page", :action => 'edit'
-    |
-    = link_to "New subpage...", new_doc_path(:parent_id => @doc.id), :class => 'new-doc'
-    |
-    = link_to "Delete this page#{' and all subpages' if @doc.children}", @doc, :method => :delete, :confirm => 'Are you sure you want to delete this page?', :style => 'color:red'
+    - if @revision_to
+      = link_to "Show current version", doc_path
+    - else
+      = link_to "Edit this page", :action => 'edit'
+      |
+      = link_to "New subpage...", new_doc_path(:parent_id => @doc.id), :class => 'new-doc'
+      |
+      = link_to "Delete this page#{' and all subpages' if @doc.children}", @doc, :method => :delete, :confirm => 'Are you sure you want to delete this page?', :style => 'color:red'

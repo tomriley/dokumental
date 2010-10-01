@@ -1,0 +1,13 @@
+%h2 Recent changes:
+%table.doc-revisions
+  %thead
+    %tr
+      %th Time
+      %th Doc Title
+      %th Author
+  - @updates.each do |revision|
+    %tr
+      %td=l revision.updated_at, :format => :short
+      %td= link_to h(revision.doc.title), doc_path(revision.doc.permalink)
+      %td= doc_author_id_to_display_name(revision.author_id)
+      %td= link_to 'View Changes', changeset_doc_path(:id => revision.doc.permalink, :revision => revision.id)

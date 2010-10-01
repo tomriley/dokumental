@@ -1,0 +1,14 @@
+- set_doc_page_title @doc.title
+= render :partial => 'sidebar'
+#doc_main_content
+  = render :partial => 'page_admin'
+  %h1.doc-title
+    =h @doc.title
+    = "(Revision #{@revision_to.version})"
+  %p
+    Author:
+    = doc_author_id_to_display_name(@revision_to.author_id)
+    %br
+    Date:
+    =l @revision_to.updated_at, :format => :short
+  = doc_html_diff(@diff, @words)
