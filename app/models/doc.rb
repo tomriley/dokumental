@@ -14,6 +14,11 @@ class Doc < ActiveRecord::Base
     permalink
   end
   
+  def self.root_docs
+    roots = Doc.roots
+    roots.reject {|d| d.permalink == 'home'}
+  end
+  
   def self.home_exists?
     doc_exists?('home')
   end

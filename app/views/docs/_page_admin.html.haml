@@ -1,7 +1,8 @@
 - if !@doc.static? && current_user_can_edit_doc?(@doc)
   %p.admin-actions
-    = link_to "Home", doc_path('home')
-    |
+    - if Doc.home_exists?
+      = link_to "Home", doc_path('home')
+      |
     = link_to "Edit this page", :action => 'edit'
     |
     = link_to "New subpage...", new_doc_path(:parent_id => @doc.id), :class => 'new-doc'

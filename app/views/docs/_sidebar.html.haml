@@ -3,7 +3,7 @@
     %p.admin-actions
       = link_to "New page...", new_doc_path, :class => 'new-doc'
   %ol
-    - Doc.roots.each do |root|
+    - Doc.root_docs.each do |root|
       = render_li_hierarchy(root)
   %ol#static_docs
     - Doc.static_docs.values.each do |doc|
