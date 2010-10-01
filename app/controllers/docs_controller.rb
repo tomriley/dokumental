@@ -5,6 +5,7 @@ class DocsController < ApplicationController
   respond_to :html
   
   def index
+    redirect_to doc_path('home') if Doc.home_exists?
   end
   
   def show

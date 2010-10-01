@@ -3,9 +3,45 @@ Dokumental
 
 Rails plugin to add a simple markdown based hierarchy of editable, database backed pages, e.g. a website manual. Can also serve static (checked in) pages.
 
-Example
-=======
+Requirements
+------------
 
-to come...
+* permalink\_fu
+* bluecloth
+* haml
+* awesome\_nested\_set
+
+Required Migration
+------------------
+
+    class AddDocs < ActiveRecord::Migration
+      def self.up
+        create_table :docs do |t|
+          t.string :title
+          t.string :permalink
+          t.text :content
+          t.integer :parent_id
+          t.integer :lft
+          t.integer :rgt
+          t.timestamps
+        end
+        add_index :docs, :permalink
+        add_index :docs, :updated_at
+        add_index :docs, :created_at
+        add_index :docs, :lft
+        add_index :docs, :rgt
+        add_index :docs, :parent_id
+      end
+
+      def self.down
+        drop_table :docs
+      end
+    end
+
+Static docs
+-----------
+
+These are markdown files and live in app/docs/. Dokumental will serve all files in this directory provided their file names don't start with a period. The first line of the file is read as the document title. All remaining lines are considered the documental body in markdown format.
+
 
 Copyright (c) 2010 Tom Riley, released under the MIT license

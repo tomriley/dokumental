@@ -14,6 +14,14 @@ class Doc < ActiveRecord::Base
     permalink
   end
   
+  def self.home_exists?
+    doc_exists?('home')
+  end
+  
+  def self.doc_exists?(permalink)
+    !static_docs[permalink].nil? || Doc.exists?(:permalink => permalink)
+  end
+  
   def self.find_static(permalink)
     static_docs[permalink]
   end
@@ -35,8 +43,9 @@ class Doc < ActiveRecord::Base
       logger.info "Loading static docs from RAILS_ROOT/app/docs..."
       @static_docs = {}
       docs = File.join(RAILS_ROOT, 'app', 'docs')
+      return @static_docs unless File.exists?(docs)
       Dir.foreach(docs) do |fname|
-        unless File.directory?(File.join(docs, fname))
+        unless fname =~ /^./ || File.directory?(File.join(docs, fname))
           lines = File.read(File.join(docs, fname)).lines.to_a
           doc = Doc.new(:title => lines.shift.strip, :content => lines.join)
           doc.static = true
