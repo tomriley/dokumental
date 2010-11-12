@@ -25,6 +25,10 @@ class Doc < ActiveRecord::Base
     doc_exists?('home')
   end
   
+  def self.find_doc(permalink)
+    static_docs[permalink] || Doc.find_by_permalink(permalink)
+  end
+  
   def self.doc_exists?(permalink)
     !static_docs[permalink].nil? || Doc.exists?(:permalink => permalink)
   end

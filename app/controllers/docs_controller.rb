@@ -21,14 +21,14 @@ class DocsController < ApplicationController
   end
   
   def update
-    params[:doc][:user_id] = current_doc_author_id
+    params[:doc][:author_id] = current_doc_author_id
     @doc = Doc.find_by_permalink(params[:id])
     @doc.update_attributes(params[:doc])
     respond_with(@doc)
   end
   
   def create
-    params[:doc][:user_id] = current_doc_author_id
+    params[:doc][:author_id] = current_doc_author_id
     clear_permalink = params[:doc][:permalink].nil? || params[:doc][:permalink].blank?
     @doc = Doc.new(params[:doc])
     if !@doc.save && clear_permalink

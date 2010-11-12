@@ -16,7 +16,7 @@ module Helper
   end
   
   def link_to_doc(label, permalink, link_opts = {})
-    doc = Doc.find_by_permalink(permalink)
+    doc = Doc.find_doc(permalink)
     if !doc && current_user_can_edit_doc?(doc)
       link_to label, new_doc_path(:permalink => permalink), link_opts
     else
